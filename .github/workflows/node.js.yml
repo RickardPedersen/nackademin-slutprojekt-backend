@@ -34,7 +34,7 @@ jobs:
     - uses: akhileshns/heroku-deploy@v3.4.6
       with:
         heroku_api_key: ${{secrets.HEROKU_API_KEY}}
-        heroku_app_name: ${{secrets.HEROKU_TODO_STAGE}}
+        heroku_app_name: ${{secrets.HEROKU_APP_NAME_STAGE}}
         heroku_email: ${{secrets.HEROKU_EMAIL}}
  
   deploy_prod:
@@ -46,5 +46,5 @@ jobs:
     - uses: akhileshns/heroku-deploy@v3.4.6
       with:
         heroku_api_key: ${{secrets.HEROKU_API_KEY}}
-        heroku_app_name: ${{secrets.HEROKU_TODO_PROD}}
+        heroku_app_name: ${{secrets.HEROKU_APP_NAME_PROD}}
         heroku_email: ${{secrets.HEROKU_EMAIL}}
