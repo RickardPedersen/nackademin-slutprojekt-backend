@@ -1,3 +1,8 @@
-const app = require('./app')
+const server = require('./app')
+const {connect} = require('./database/db');
 
-app.listen(process.env.PORT || 5000, () => console.log("It's running birch!"))
+connect().then( () => {
+    server.listen(process.env.PORT || 5000, () => console.log("It's running birch!"))
+});
+
+module.exports = server;
