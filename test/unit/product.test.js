@@ -1,11 +1,13 @@
 require('dotenv').config()
 const chai = require('chai')
+const expect = chai.expect
 let {connect, disconnect} = require('../../database/db')
+let {shouldSucceed} = require('../productTestData');
 const productModel = require('../../models/productModel')
 
 describe('Unittest against productModel', function () {
     before( async() => {
-        await connect()
+        await connect();
     })
 
     after(async () => {
@@ -24,14 +26,22 @@ describe('Unittest against productModel', function () {
             /**
              * Arrange
              */
-
+            let promises = []
             /**
              * Act
              */
+            shouldSucceed.multipleObjects.forEach(object => {
+                promises.push(productModel.createProduct(object))
+            });
 
+            let results = await Promise.all(promises)
             /**
              * Assert
              */
+
+            for (let index = 0; index < results.length; index++) {
+                expect(results[index]).to.includes(shouldSucceed.multipleObjects[index])
+            }
         })
 
         it('Should be able to get specific product', async function () {
