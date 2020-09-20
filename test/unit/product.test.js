@@ -3,7 +3,7 @@ const chai = require('chai')
 const expect = chai.expect
 let {connect, disconnect} = require('../../database/db')
 let {shouldSucceed} = require('../productTestData');
-const productModel = require('../../models/productModel')
+const product = require('../../models/productModel')
 
 describe('Unittest against productModel', function () {
     before( async() => {
@@ -11,18 +11,17 @@ describe('Unittest against productModel', function () {
     })
 
     after(async () => {
-        server.close()
-        await productModel.productModel.deleteMany({})
+        await product.productModel.deleteMany({})
         await disconnect()
     });
 
     describe('Successful tests', function () {
 
         beforeEach(async function() {
-            await productModel.productModel.deleteMany({})
+            await product.productModel.deleteMany({})
         });
 
-        it('Should be able to create a product', async function() {
+        it('Should be able to create many products', async function() {
             /**
              * Arrange
              */
@@ -31,7 +30,7 @@ describe('Unittest against productModel', function () {
              * Act
              */
             shouldSucceed.multipleObjects.forEach(object => {
-                promises.push(productModel.createProduct(object))
+                promises.push(product.createProduct(object))
             });
 
             let results = await Promise.all(promises)

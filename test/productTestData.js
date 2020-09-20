@@ -13,11 +13,11 @@ const images = [
 
 function generateFakeObject() {
     return {
-        title: faker.commerce.productName,
-        price: faker.commerce.price,
-        shortDesc: faker.name.gender,
-        category: faker.commerce.product,
-        longDesc: faker.commerce.productDescription,
+        title: faker.commerce.productName(),
+        price: Math.ceil(faker.commerce.price()),
+        shortDesc: faker.name.gender(),
+        category: faker.commerce.product(),
+        longDesc: faker.commerce.productDescription(),
         imgFile: images[Math.floor(Math.random() * images.length)]
     }
 }
@@ -27,7 +27,6 @@ function generateFakeObject() {
 shouldSucceed = {
     singleObject: generateFakeObject(),
     multipleObjects: [
-
     ]
 }
 
