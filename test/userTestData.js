@@ -4,7 +4,7 @@ const user = {
   repeatPassword: "password123",
   name: "Johan Kivi",
   role: "admin",
-  address: {
+  adress: {
     street: "Tokitokvägen 3",
     zip: "123 45",
     city: "Tokberga",
@@ -15,7 +15,7 @@ const user = {
 const invalidUser = {
   password: "password123",
   repeatPassword: "password123",
-  address: {
+  adress: {
     street: "Tokitokvägen 3",
     zip: "123 45",
     city: "Tokberga",
