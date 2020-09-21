@@ -10,13 +10,13 @@ switch(process.env.ENVIRONMENT) {
     case "prod":
     case "stage":
         let auth = '';
-        if (process.env.DBUSER && process.env.DBPASSWORD) {
-            auth = `${process.env.DBUSER}:${process.env.DBPASSWORD}@`
+        if (process.env.DB_USER && process.env.DB_PASS) {
+            auth = `${process.env.DB_USER}:${process.env.DB_PASS}@`
         }
-        let tls = (process.env.DBTLS.toLowerCase() == 'true')? '+srv' : ''
+        let tls = (process.env.DB_TLS.toLowerCase() == 'true')? '+srv' : ''
         mongodb = {
             getUri: async () =>
-                `mongodb${tls}://${auth}${process.env.DBHOST}:/${process.env.DATABASE}_${process.env.ENVIRONMENT}`
+                `mongodb${tls}://${auth}${process.env.DB_HOST}:/${process.env.DB_DATABASE}_${process.env.ENVIRONMENT}`
         }
         break;
     default:

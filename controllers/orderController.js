@@ -32,6 +32,19 @@ class OrderController {
             next(error)
         }
     }
+
+    async getOrders(req, res, next) {
+        try {
+            if (req.user.isAdmin()) {
+                res.status(200).json(await Order.getAllOrders())
+            } else {
+                const user = await User.getUser(req.user.id)
+                res.status(200).json(await Order.getCustomerOrders(user.orderHistory))
+            }
+        } catch (error) {
+            next(error)
+        }
+    }
 }
 
 module.exports = new OrderController()
