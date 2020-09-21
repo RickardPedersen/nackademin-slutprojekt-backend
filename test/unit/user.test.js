@@ -27,10 +27,9 @@ describe("Unit test - User model", () => {
 
     it("Login a existing user", async () => {
       await UserModel.register(user);
-      const loggedInUser = await UserModel.login(user.email, user.password);
-      console.log(loggedInUser);
-      loggedInUser.should.be.a("object");
-      loggedInUser.should.have.keys("token", "user");
+      const res = await UserModel.login(user.email, user.password);
+      res.should.be.a("object");
+      res.should.have.keys("token", "user");
     });
   });
 
@@ -41,6 +40,12 @@ describe("Unit test - User model", () => {
 
     it("Invalid registration a new user (missing input data)", async () => {
       await UserModel.register(invalidUser).should.be.rejectedWith(Error);
+    });
+
+    it("Invalid login of existing user (wrong password)", (done) => {
+      UserModel.login(user.email, "123")
+        .should.eventually.be.rejectedWith("Username or password is incorrect")
+        .notify(done);
     });
   });
 });
