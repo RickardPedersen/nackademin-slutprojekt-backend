@@ -52,7 +52,32 @@ describe('Integration against productModel', function () {
         })
 
         it('Should be able to get specific product', async function () {
+            /**
+             * Arrange
+             */
+            let promises = []
+            shouldSucceed.multipleObjects.forEach(object => {
+                promises.push(product.createProduct(object))
+            })
+            let allProducts = await Promise.all(promises)
+            /**
+             * Act
+             */
 
+            let resultsPromises = []
+            allProducts.forEach(object => {
+                resultsPromises.push(chai.request(app)
+                    .post(`/api/products/${object._id}`)
+                    .send())
+            })
+            let results = await Promise.all(resultsPromises)
+            /**
+             * Assert
+             */
+            for (let index = 0; index < results.length; index++) {
+                expect(results[index].body).to.includes(allProducts[index])
+                expect(results[index]).to.have.status(200)
+            }
         })
 
         it('Should be able to get all products', async function () {
