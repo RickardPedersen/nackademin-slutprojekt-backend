@@ -13,7 +13,16 @@ class Product {
 
     async createProduct(newObject) {
         try {
-            return await this.productModel.create(newObject)
+            let result = await this.productModel.create(newObject)
+
+            return {
+                _id: result._id,
+                title: result.title,
+                price: result.price,
+                shortDesc: result.shortDesc,
+                longDesc: result.longDesc,
+                imgFile: result.imgFile
+            }
         } catch (error) {
             throw new BadRequestError(error.message)
         }

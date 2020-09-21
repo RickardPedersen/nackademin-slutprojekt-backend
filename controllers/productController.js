@@ -4,16 +4,7 @@ class ProductController {
 
     async createProduct(req, res, next) {
         try {
-            let result = await productModel.createProduct(req.body)
-
-            res.status(200).send({
-                _id: result._id,
-                title: result.title,
-                price: result.price,
-                shortDesc: result.shortDesc,
-                longDesc: result.longDesc,
-                imgFile: result.imgFile
-            })
+            res.status(200).send(await productModel.createProduct(req.body))
         } catch (error) {
             next(error)
         }
