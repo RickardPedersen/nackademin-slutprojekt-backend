@@ -44,7 +44,10 @@ class Order {
     async getCustomerOrders(orderHistory) {
         let customerOrders = []
         for (let orderId of orderHistory) {
-            customerOrders.push(await this.orderModel.findById(orderId))
+            if (mongoose.Types.ObjectId.isValid(orderId)) {
+                const order = await this.orderModel.findById(orderId)
+                if (order) { customerOrders.push(order) }
+            }
         }
         return customerOrders
     }

@@ -38,7 +38,7 @@ class OrderController {
             if (req.user.isAdmin()) {
                 res.status(200).json(await Order.getAllOrders())
             } else {
-                const user = User.getUser(req.user.id)
+                const user = await User.getUser(req.user.id)
                 res.status(200).json(await Order.getCustomerOrders(user.orderHistory))
             }
         } catch (error) {
