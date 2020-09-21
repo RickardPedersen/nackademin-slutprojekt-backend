@@ -33,6 +33,14 @@ class ProductController {
             next(error)
         }
     }
+
+    async deleteProduct(req, res, next) {
+        try {
+            res.status(200).send(await productModel.deleteProduct(req.params.id))
+        } catch (error) {
+            next(error)
+        }
+    }
 }
 
 module.exports = new ProductController()
