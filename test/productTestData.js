@@ -64,6 +64,8 @@ for(let index = 0; index < 100; index++) {
     shouldSucceed.multipleObjects.push(generateFakeObject());
 }
 
+updateData = generateFakeObject()
 
 
-module.exports = {shouldSucceed, shouldFail}
+
+module.exports = {shouldSucceed, shouldFail, updateData}

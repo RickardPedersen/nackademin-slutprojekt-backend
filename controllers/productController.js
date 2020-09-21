@@ -25,6 +25,14 @@ class ProductController {
             next(error)
         }
     }
+
+    async updateProduct(req, res, next) {
+        try {
+            res.status(200).send(await productModel.updateProduct(req.params.id, req.body))
+        } catch (error) {
+            next(error)
+        }
+    }
 }
 
 module.exports = new ProductController()
