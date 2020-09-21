@@ -21,6 +21,7 @@ describe("Integration test - POST /api/auth", () => {
   describe("Successful tests", () => {
     beforeEach(async () => {
       await UserModel.clear();
+      await UserModel.register(user);
     });
 
     it("Login a existing user", async () => {
