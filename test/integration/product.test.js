@@ -99,11 +99,11 @@ describe('Integration against productModel', function () {
             /**
              * Assert
              */
-            expect(results.length).to.have.length(allProducts.length);
+            expect(results.body).to.have.length(allProducts.length);
             expect(results).to.have.status(200)
 
             for(let index = 0; index < allProducts.length; index++) {
-                expect(results[index]).to.include(allProducts[index])
+                expect(results.body[index]).to.include(allProducts[index])
             }
         })
 
