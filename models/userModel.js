@@ -47,7 +47,7 @@ class User {
     delete registeredUser._doc.password;
 
     return {
-      ...registeredUser._doc,
+      user: registeredUser._doc,
       token: this.generateToken(registeredUser._doc),
     };
   }
