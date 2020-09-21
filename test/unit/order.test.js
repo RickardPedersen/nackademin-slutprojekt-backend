@@ -5,7 +5,7 @@ chai.should()
 chai.use(require('chai-as-promised'))
 const {expect} = require('chai')
 const Order = require('../../models/orderModel')
-const {generateFakeOrder, generateFailOrder} = require('../orderTestData')
+const {generateFakeOrder, generateFailOrder, generateFakeCustomer} = require('../orderTestData')
 
 describe('Unit tests against order model', function() {
     before(async function() {
@@ -43,7 +43,7 @@ describe('Unit tests against order model', function() {
 
         it('Should return all orders (admin)', async function() {
             // Arrange
-            for(let i = 0; i < 10; i++) {
+            for (let i = 0; i < 10; i++) {
                 await Order.createOrder(generateFakeOrder())
             }
 
@@ -53,6 +53,26 @@ describe('Unit tests against order model', function() {
             // Assert
             orders.should.be.an('array')
             orders.length.should.equal(10)
+        })
+
+        it('Should only return customers orders', async function() {
+            // Arrange
+            const customer = generateFakeCustomer()
+            for (let i = 0, customerOrders = 5; i < 10; i++) {
+                if (i < customerOrders) {
+                    const res = await Order.createOrder(generateFakeOrder())
+                    customer.orderHistory.push(res._id)
+                } else {
+                    await Order.createOrder(generateFakeOrder())
+                }
+            }
+
+            // Act
+            const orders = await Order.getCustomerOrders(customer.orderHistory)
+
+            // Assert
+            orders.should.be.an('array')
+            orders.length.should.equal(5)
         })
     })
 

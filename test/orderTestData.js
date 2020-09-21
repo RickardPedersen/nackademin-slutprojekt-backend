@@ -17,4 +17,20 @@ function generateFailOrder() {
     }
 }
 
-module.exports = {generateFakeOrder, generateFailOrder}
+function generateFakeCustomer() {
+    return {
+        _id: Types.ObjectId(),
+        email: 'blabla@test.se',
+        password: '$$$hashed password$$$',
+        name: 'Test Customer',
+        role: 'customer',
+        adress: {
+            street: 'Tokitokvägen 3',
+            zip: '123 45',
+            city: 'Tokberga'
+        },
+        orderHistory: []
+    }
+}
+
+module.exports = {generateFakeOrder, generateFailOrder, generateFakeCustomer}

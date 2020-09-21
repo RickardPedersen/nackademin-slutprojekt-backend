@@ -39,6 +39,14 @@ class Order {
     async getAllOrders() {
         return await this.orderModel.find({})
     }
+
+    async getCustomerOrders(orderHistory) {
+        let customerOrders = []
+        for (let orderId of orderHistory) {
+            customerOrders.push(await this.orderModel.findById(orderId))
+        }
+        return customerOrders
+    }
 }
 
 module.exports = new Order()
