@@ -43,7 +43,30 @@ describe('Unittest against productModel', function () {
         })
 
         it('Should be able to get specific product', async function () {
+            /**
+             * Arrange
+             */
+            let promises = []
+            shouldSucceed.multipleObjects.forEach(object => {
+                promises.push(product.createProduct(object))
+            })
+            let allProducts = await Promise.all(promises)
+            /**
+             * Act
+             */
+            let resultsPromises = []
+            allProducts.forEach(productObject => {
+                 resultsPromises.push(product.getSpecifcProduct(productObject._id))
+            })
 
+            let allSpecificProducts = await Promise.all(resultsPromises)
+            /**
+             * Assert
+             */
+            expect(allSpecificProducts.length).to.have.length(allProducts.length)
+            for (let index = 0; index < allProducts.length; index++) {
+                expect(allSpecificProducts[index]).to.include(allProducts[index])
+            }
         })
 
         it('Should be able to get all products', async function () {
@@ -78,6 +101,22 @@ describe('Unittest against productModel', function () {
             for (let index = 0; index < results.length; index++) {
                 expect(results[index].status).to.equals('rejected')
             }
+        })
+
+        it('Should fail to get specific product', async function () {
+            /**
+             * Arrange
+             */
+            const fake_id = "01238979sad7as89d79af"
+            /**
+             * Act
+             */
+            let result = await Promise.allSettled([product.getSpecifcProduct(fake_id)])
+            /**
+             * Assert
+             */
+
+            expect(result.status).to.equals('rejected')
         })
     })
 })
