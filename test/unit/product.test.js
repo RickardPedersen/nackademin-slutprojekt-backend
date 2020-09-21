@@ -88,7 +88,6 @@ describe('Unittest against productModel', function () {
             expect(results).to.have.length(allProducts.length)
 
         })
-
         it('Should be able to update specific product', async function () {
             /**
              * Arrange
@@ -105,7 +104,18 @@ describe('Unittest against productModel', function () {
         })
 
         it('Should be able to delete specific product', async function() {
-
+            /**
+             * Arrange
+             */
+            const productToBeUpdated = await product.createProduct(shouldSucceed.multipleObjects[0])
+            /**
+             * Act
+             */
+            const result = await product.deleteProduct(productToBeUpdated._id,)
+            /**
+             * Assert
+             */
+            expect(result.totalRemoved).to.equal(1)
         });
     })
 
@@ -142,7 +152,6 @@ describe('Unittest against productModel', function () {
             /**
              * Assert
              */
-
             expect(result[0].status).to.equals('rejected')
         })
     })
