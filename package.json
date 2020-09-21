@@ -26,6 +26,7 @@
   "homepage": "https://github.com/zocom-david-lundholm/nackademin-slutprojekt-backend#readme",
   "dependencies": {
     "bcryptjs": "^2.4.3",
+    "chai-as-promised": "^7.1.1",
     "cross-env": "^7.0.2",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
