@@ -2,8 +2,10 @@ require('dotenv').config()
 const {connect, disconnect} = require('../../database/db')
 const chai = require('chai')
 chai.should()
+chai.use(require('chai-as-promised'))
+const {expect} = require('chai')
 const Order = require('../../models/orderModel')
-const {generateFakeOrder} = require('../orderTestData')
+const {generateFakeOrder, generateFailOrder} = require('../orderTestData')
 
 describe('Unit tests against order model', function() {
     before(async function() {
@@ -41,6 +43,12 @@ describe('Unit tests against order model', function() {
     })
 
     describe('Fail tests', function() {
+        it('Should fail creating an order', async function() {
+            // Arrange
+            const newOrder = generateFailOrder()
 
+            // Act / Assert
+            await expect(Order.createOrder(newOrder)).to.be.rejectedWith(Error)
+        })
     })
 })

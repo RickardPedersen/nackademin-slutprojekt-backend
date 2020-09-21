@@ -10,4 +10,11 @@ function generateFakeOrder() {
     }
 }
 
-module.exports = {generateFakeOrder}
+function generateFailOrder() {
+    return {
+        items: [],
+        orderValue: 'asdasd'
+    }
+}
+
+module.exports = {generateFakeOrder, generateFailOrder}
