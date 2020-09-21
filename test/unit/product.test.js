@@ -43,7 +43,22 @@ describe('Unittest against productModel', function () {
         })
 
         it('Should be able to get specific product', async function () {
-
+            /**
+             * Arrange
+             */
+            let promises = []
+            shouldSucceed.multipleObjects.forEach(object => {
+                promises.push(product.createProduct(object))
+            });
+            let allProducts = await Promise.all(promises)
+            /**
+             * Act
+             */
+            let result = await product.getAllProducts()
+            /**
+             * Assert
+             */
+            expect(result.length).to.have.length(allProducts.length)
         })
 
         it('Should be able to get all products', async function () {
