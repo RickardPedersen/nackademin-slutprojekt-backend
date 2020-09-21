@@ -6,7 +6,7 @@ chai.use(chaiHTTP);
 const app = require('../../app');
 const server = require('../../start');
 let {connect, disconnect} = require('../../database/db')
-let {shouldFail, shouldSucceed} = require('../productTestData');
+let {shouldFail, shouldSucceed, updateData} = require('../productTestData');
 const product = require('../../models/productModel')
 
 describe('Integration against productModel', function () {
@@ -103,7 +103,21 @@ describe('Integration against productModel', function () {
         })
 
         it('Should be able to update specific product', async function () {
-
+            /**
+             * Arrange
+             */
+            const productToBeUpdated = await product.createProduct(shouldSucceed.multipleObjects[0])
+            /**
+             * Act
+             */
+            let result = await chai.request(app)
+                .patch(`/api/products/${productToBeUpdated._id}`)
+                .send(updateData)
+            /**
+             * Assert
+             */
+            expect(result).to.have.status(200)
+            expect(result.body).to.include(updateData)
         })
 
         it('Should be able to delete specific product', async function() {
