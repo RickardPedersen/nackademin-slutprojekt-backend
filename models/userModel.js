@@ -88,6 +88,10 @@ class User {
     );
   }
 
+  async getUser(userId) {
+    return await this.userModel.findById(userId)
+  }
+
   async clear() {
     await this.userModel.deleteMany({});
   }
