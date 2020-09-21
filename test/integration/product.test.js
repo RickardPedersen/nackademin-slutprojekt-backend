@@ -7,7 +7,7 @@ const app = require('../../app');
 const server = require('../../start');
 let {connect, disconnect} = require('../../database/db')
 let {shouldFail, shouldSucceed, updateData} = require('../productTestData');
-const { user, invalidUser } = require("../userTestData");
+const { user } = require("../userTestData");
 const product = require('../../models/productModel')
 const userModel = require('../../models/userModel')
 
@@ -120,6 +120,7 @@ describe('Integration against productModel', function () {
              */
             let result = await chai.request(app)
                 .patch(`/api/products/${productToBeUpdated._id}`)
+                .set('Authorization', `Bearer ${token}`)
                 .send(updateData)
             /**
              * Assert
@@ -138,6 +139,7 @@ describe('Integration against productModel', function () {
              */
             const result =await chai.request(app)
                 .delete(`/api/products/${productToBeDeleted._id}`)
+                .set('Authorization', `Bearer ${token}`)
                 .send()
             /**
              * Assert
@@ -148,6 +150,14 @@ describe('Integration against productModel', function () {
     })
 
     describe('Should fail', function () {
+        let token
+        beforeEach(async function() {
+            await product.productModel.deleteMany({})
+            await userModel.userModel.deleteMany({})
+            await userModel.register(JSON.parse(JSON.stringify(user)))
+            const res = await userModel.login(user.email, user.password)
+            token = res.token
+        });
         it('Should fail to create products', async function() {
             /**
              * Arrange
@@ -159,6 +169,7 @@ describe('Integration against productModel', function () {
             for(let [key, object] of Object.entries(shouldFail)) {
                 promises.push(chai.request(app)
                     .post('/api/products')
+                    .set('Authorization', `Bearer ${token}`)
                     .send(object))
             }
             let results = await Promise.all(promises)
@@ -167,6 +178,51 @@ describe('Integration against productModel', function () {
              */
             for (let index = 0; index < results.length; index++) {
                 expect(results[index]).to.have.status(400)
+            }
+        })
+
+        it('Should fail to delete products without Authorization token ', async function() {
+            /**
+             * Arrange
+             */
+            let promises = []
+            /**
+             * Act
+             */
+            for(let [key, object] of Object.entries(shouldFail)) {
+                promises.push(chai.request(app)
+                    .delete('/api/products/21380921')
+                    .send(object))
+            }
+            let results = await Promise.all(promises)
+            /**
+             * Assert
+             */
+            for (let index = 0; index < results.length; index++) {
+                expect(results[index]).to.have.status(403)
+            }
+        })
+
+        it('Should fail to delete products with wrong token ', async function() {
+            /**
+             * Arrange
+             */
+            let promises = []
+            /**
+             * Act
+             */
+            for(let [key, object] of Object.entries(shouldFail)) {
+                promises.push(chai.request(app)
+                    .delete('/api/products/289138901238')
+                    .set('Authorization', `Bearer BIBOP`)
+                    .send(object))
+            }
+            let results = await Promise.all(promises)
+            /**
+             * Assert
+             */
+            for (let index = 0; index < results.length; index++) {
+                expect(results[index]).to.have.status(401)
             }
         })
     })

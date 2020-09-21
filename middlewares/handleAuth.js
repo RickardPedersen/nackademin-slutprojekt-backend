@@ -26,11 +26,11 @@ module.exports = {
     
         try {
             const payload = jwt.verify(token, process.env.SECRET)
+            req.user = {
+                ...payload,
+                isAdmin() { return this.role === 'admin' }
+            }
             if (req.user.role === 'admin') {
-                req.user = {
-                    ...payload,
-                    isAdmin() { return this.role === 'admin' }
-                }
                 next()
             } else {
                 throw new Error('Not Admin')
