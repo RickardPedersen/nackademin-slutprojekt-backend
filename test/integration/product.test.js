@@ -56,7 +56,26 @@ describe('Integration against productModel', function () {
         })
 
         it('Should be able to get all products', async function () {
+            /**
+             * Arrange
+             */
+            let promises = []
+            shouldSucceed.multipleObjects.forEach(object => {
+                promises.push(product.createProduct(object))
+            });
+            let allProducts = await Promise.all(promises)
 
+            /**
+             * Act
+             */
+            let results = await chai.request(app)
+                .get('/api/products')
+                .send()
+            /**
+             * Assert
+             */
+            expect(results.length).to.have.length(allProducts.length);
+            expect(results).to.have.status(200)
         })
 
         it('Should be able to update specific product', async function () {
