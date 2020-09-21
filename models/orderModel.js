@@ -35,6 +35,10 @@ class Order {
         }
         return await this.orderModel.create(orderObject)
     }
+
+    async getAllOrders() {
+        return await this.orderModel.find({})
+    }
 }
 
 module.exports = new Order()

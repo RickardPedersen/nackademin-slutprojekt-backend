@@ -40,6 +40,20 @@ describe('Unit tests against order model', function() {
             result.items.should.deep.equal(newOrder.items)
             result.orderValue.should.equal(newOrder.orderValue)
         })
+
+        it('Should return all orders (admin)', async function() {
+            // Arrange
+            for(let i = 0; i < 10; i++) {
+                await Order.createOrder(generateFakeOrder())
+            }
+
+            // Act
+            const orders = await Order.getAllOrders()
+
+            // Assert
+            orders.should.be.an('array')
+            orders.length.should.equal(10)
+        })
     })
 
     describe('Fail tests', function() {
