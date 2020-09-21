@@ -76,6 +76,10 @@ describe('Integration against productModel', function () {
              */
             expect(results.length).to.have.length(allProducts.length);
             expect(results).to.have.status(200)
+
+            for(let index = 0; index < allProducts.length; index++) {
+
+            }
         })
 
         it('Should be able to update specific product', async function () {

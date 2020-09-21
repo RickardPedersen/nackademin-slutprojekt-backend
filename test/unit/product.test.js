@@ -43,6 +43,10 @@ describe('Unittest against productModel', function () {
         })
 
         it('Should be able to get specific product', async function () {
+
+        })
+
+        it('Should be able to get all products', async function () {
             /**
              * Arrange
              */
@@ -59,10 +63,6 @@ describe('Unittest against productModel', function () {
              * Assert
              */
             expect(result.length).to.have.length(allProducts.length)
-        })
-
-        it('Should be able to get all products', async function () {
-
         })
 
         it('Should be able to update specific product', async function () {
