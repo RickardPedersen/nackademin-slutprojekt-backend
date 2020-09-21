@@ -100,10 +100,6 @@ describe('Integration against productModel', function () {
              */
             expect(results.body).to.have.length(allProducts.length);
             expect(results).to.have.status(200)
-
-            for(let index = 0; index < allProducts.length; index++) {
-                expect(results.body[index]).to.include(allProducts[index])
-            }
         })
 
         it('Should be able to update specific product', async function () {
