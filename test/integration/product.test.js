@@ -67,7 +67,7 @@ describe('Integration against productModel', function () {
             let resultsPromises = []
             allProducts.forEach(object => {
                 resultsPromises.push(chai.request(app)
-                    .post(`/api/products/${object._id}`)
+                    .get(`/api/products/${object._id}`)
                     .send())
             })
             let results = await Promise.all(resultsPromises)
