@@ -1,5 +1,7 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+const { NotFoundError, UnauthorizedError } = require("../utilities/error");
 
 class User {
   userSchema = new mongoose.Schema(
@@ -34,6 +36,34 @@ class User {
       email,
       role,
       name,
+    };
+  }
+
+  generateToken(user) {
+    return jwt.sign(
+      {
+        id: user._id,
+        email: user.email,
+        role: user.role,
+      },
+      process.env.SECRET,
+      { expiresIn: "1h" }
+    );
+  }
+
+  async login(username, password) {
+    const user = await this.userModel.findOne({ email: username });
+    if (!user) throw new NotFoundError("Username or password is incorrect");
+
+    const validPassword = bcrypt.compare(password, user.password);
+    if (!validPassword)
+      throw new UnauthorizedError("Username or password is incorrect");
+
+    delete user.password;
+
+    return {
+      user,
+      token: this.generateToken(user),
     };
   }
 

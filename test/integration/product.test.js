@@ -11,7 +11,7 @@ const product = require('../../models/productModel')
 
 describe('Integration against productModel', function () {
     before( async() => {
-        await connect();
+        await connect()
     })
 
     after(async () => {
@@ -81,7 +81,25 @@ describe('Integration against productModel', function () {
         })
 
         it('Should be able to get all products', async function () {
+            /**
+             * Arrange
+             */
+            let allProducts = []
+            for(let object of shouldSucceed.multipleObjects) {
+                allProducts.push(await product.createProduct(object))
+            }
 
+            /**
+             * Act
+             */
+            let results = await chai.request(app)
+                .get('/api/products')
+                .send()
+            /**
+             * Assert
+             */
+            expect(results.body).to.have.length(allProducts.length);
+            expect(results).to.have.status(200)
         })
 
         it('Should be able to update specific product', async function () {
