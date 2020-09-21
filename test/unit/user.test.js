@@ -28,7 +28,7 @@ describe("Unit test - User model", () => {
     it("Login a existing user", async () => {
       await UserModel.register(user);
       const loggedInUser = await UserModel.login(user.email, user.password);
-
+      console.log(loggedInUser);
       loggedInUser.should.be.a("object");
       loggedInUser.should.have.keys("token", "user");
     });
