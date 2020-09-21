@@ -11,7 +11,7 @@ const product = require('../../models/productModel')
 
 describe('Integration against productModel', function () {
     before( async() => {
-        await connect();
+        await connect()
     })
 
     after(async () => {
@@ -62,7 +62,7 @@ describe('Integration against productModel', function () {
             let promises = []
             shouldSucceed.multipleObjects.forEach(object => {
                 promises.push(product.createProduct(object))
-            });
+            })
             let allProducts = await Promise.all(promises)
 
             /**

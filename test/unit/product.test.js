@@ -58,11 +58,15 @@ describe('Unittest against productModel', function () {
             /**
              * Act
              */
-            let result = await product.getAllProducts()
+            let results = await product.getAllProducts()
             /**
              * Assert
              */
-            expect(result.length).to.have.length(allProducts.length)
+            expect(results).to.have.length(allProducts.length)
+
+            for(let index = 0; index < allProducts.length; index++) {
+                expect(results[index]).to.include(allProducts[index])
+            }
         })
 
         it('Should be able to update specific product', async function () {
