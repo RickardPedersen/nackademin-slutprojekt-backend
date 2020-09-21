@@ -48,7 +48,7 @@ describe("Unit test - User model", () => {
         .notify(done);
     });
 
-    it("Invalid login of existing user (wrong password)", (done) => {
+    it("Invalid login of existing user (wrong username)", (done) => {
       UserModel.register(user).then(() => {
         UserModel.login("test@test.com", user.password)
           .should.eventually.be.rejectedWith(

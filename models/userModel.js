@@ -28,9 +28,12 @@ class User {
   userModel = new mongoose.model("user", this.userSchema);
 
   async register(user) {
-    user.password = bcrypt.hashSync(user.password, 10);
-    const newUser = new this.userModel(user);
-    const { _id, email, role, name } = await newUser.save();
+    const password = bcrypt.hashSync(user.password, 10);
+    const { _id, email, role, name } = await this.userModel.create({
+      ...user,
+      password: password,
+    });
+
     return {
       _id,
       email,
@@ -55,7 +58,7 @@ class User {
     const user = await this.userModel.findOne({ email: username });
     if (!user) throw new NotFoundError("Username or password is incorrect");
 
-    const validPassword = bcrypt.compare(password, user.password);
+    const validPassword = await bcrypt.compare(password, user.password);
     if (!validPassword)
       throw new UnauthorizedError("Username or password is incorrect");
 
