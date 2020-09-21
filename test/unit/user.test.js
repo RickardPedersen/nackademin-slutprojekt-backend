@@ -23,7 +23,8 @@ describe("Unit test - User model", () => {
     it("Register a new user", async () => {
       const newUser = await UserModel.register(user);
       newUser.should.be.a("object");
-      newUser.should.have.keys(
+      newUser.should.have.property("token");
+      newUser.user.should.have.keys(
         "_id",
         "email",
         "role",

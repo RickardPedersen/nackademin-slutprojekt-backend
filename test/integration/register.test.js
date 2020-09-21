@@ -31,7 +31,8 @@ describe("Integration test - POST /api/register", () => {
 
       expect(res).to.have.status(200);
       expect(res).to.be.json;
-      expect(res.body).to.have.keys(
+      expect(res.body).to.have.property("token");
+      expect(res.body.user).to.have.keys(
         "_id",
         "email",
         "role",
