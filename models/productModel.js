@@ -7,7 +7,8 @@ class Product {
         price: {required: true, type: Number},
         shortDesc: {required: true, type: String},
         longDesc: {required: true, type: String},
-        imgFile: {required: true, type: String}
+        imgFile: {required: true, type: String},
+        serial: {type: String}
     }, {versionKey:false, strict: "throw"})
     productModel = new mongoose.model('product', this.productSchema)
 
@@ -21,7 +22,8 @@ class Product {
                 price: result.price,
                 shortDesc: result.shortDesc,
                 longDesc: result.longDesc,
-                imgFile: result.imgFile
+                imgFile: result.imgFile,
+                serial: result.serial
             }
         } catch (error) {
             throw new BadRequestError(error.message)
@@ -37,7 +39,8 @@ class Product {
                 price: result.price,
                 shortDesc: result.shortDesc,
                 longDesc: result.longDesc,
-                imgFile: result.imgFile
+                imgFile: result.imgFile,
+                serial: result.serial
             }
         } catch(error) {
             throw new BadRequestError(error.message)
@@ -54,7 +57,9 @@ class Product {
                     price: doc.price,
                     shortDesc: doc.shortDesc,
                     longDesc: doc.longDesc,
-                    imgFile: doc.imgFile}
+                    imgFile: doc.imgFile,
+                    serial: doc.serial
+                }
             })
         } catch (error) {
             throw new NotFoundError(error.message)

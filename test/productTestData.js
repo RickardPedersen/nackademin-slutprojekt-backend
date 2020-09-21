@@ -17,7 +17,8 @@ function generateFakeObject() {
         price: Math.ceil(faker.commerce.price()),
         shortDesc: faker.name.gender(),
         longDesc: faker.commerce.productDescription(),
-        imgFile: images[Math.floor(Math.random() * images.length)]
+        imgFile: images[Math.floor(Math.random() * images.length)],
+        serial: String(faker.random.number())
     }
 }
 
