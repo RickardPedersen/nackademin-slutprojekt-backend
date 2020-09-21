@@ -29,7 +29,8 @@ describe("Unit test - User model", () => {
         "role",
         "name",
         "adress",
-        "orderHistory"
+        "orderHistory",
+        "token"
       );
     });
 

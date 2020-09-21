@@ -37,7 +37,8 @@ describe("Integration test - POST /api/register", () => {
         "role",
         "name",
         "adress",
-        "orderHistory"
+        "orderHistory",
+        "token"
       );
     });
   });
