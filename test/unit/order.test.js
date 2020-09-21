@@ -1,9 +1,9 @@
 require('dotenv').config()
 const {connect, disconnect} = require('../../database/db')
 const chai = require('chai')
-chai.should()
-chai.use(require('chai-as-promised'))
 const {expect} = require('chai')
+chai.use(require('chai-as-promised'))
+chai.should()
 const Order = require('../../models/orderModel')
 const {generateFakeOrder, generateFailOrder, generateFakeCustomer} = require('../orderTestData')
 
@@ -30,7 +30,7 @@ describe('Unit tests against order model', function() {
 
             // Assert
             result.should.be.an('object')
-            result.toJSON().should.have.keys(['_id', 'timeStamp', 'status', 'items', 'orderValue'])
+            result.should.have.keys(['_id', 'timeStamp', 'status', 'items', 'orderValue'])
             result._id.should.be.an('object')
             result.timeStamp.should.be.a('date')
             result.status.should.be.a('string')

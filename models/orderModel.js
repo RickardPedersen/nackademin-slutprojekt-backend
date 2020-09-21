@@ -33,7 +33,8 @@ class Order {
             status: 'inProcess',
             ...itemsAndOrderValue
         }
-        return await this.orderModel.create(orderObject)
+        const {_id, timeStamp, status, items, orderValue} = await this.orderModel.create(orderObject)
+        return {_id, timeStamp, status, items, orderValue}
     }
 
     async getAllOrders() {
