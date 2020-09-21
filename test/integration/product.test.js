@@ -84,11 +84,10 @@ describe('Integration against productModel', function () {
             /**
              * Arrange
              */
-            let promises = []
-            shouldSucceed.multipleObjects.forEach(object => {
-                promises.push(product.createProduct(object))
-            })
-            let allProducts = await Promise.all(promises)
+            let allProducts = []
+            for(let object of shouldSucceed.multipleObjects) {
+                allProducts.push(await product.createProduct(object))
+            }
 
             /**
              * Act
