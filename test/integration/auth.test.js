@@ -21,10 +21,10 @@ describe("Integration test - POST /api/auth", () => {
   describe("Successful tests", () => {
     beforeEach(async () => {
       await UserModel.clear();
-      await UserModel.register(user);
     });
 
     it("Login a existing user", async () => {
+      await UserModel.register(user);
       const res = await request(app)
         .post("/api/auth")
         .set("Content-type", `application/json`)
@@ -42,7 +42,7 @@ describe("Integration test - POST /api/auth", () => {
       await UserModel.register(user);
     });
 
-    it("Invalid input data (missing password field)", async () => {
+    it("Invalid input data (missing username field)", async () => {
       const res = await request(app)
         .post("/api/auth")
         .set("Content-type", `application/json`)
@@ -50,6 +50,18 @@ describe("Integration test - POST /api/auth", () => {
 
       res.should.have.status(404);
       res.body.should.include({ message: "Username or password is incorrect" });
+    });
+
+    it("Invalid input data (missing password field)", async () => {
+      const res = await request(app)
+        .post("/api/auth")
+        .set("Content-type", `application/json`)
+        .send({ username: user.email });
+
+      res.should.have.status(500);
+      res.body.should.include({
+        message: "Illegal arguments: undefined, string",
+      });
     });
   });
 });
