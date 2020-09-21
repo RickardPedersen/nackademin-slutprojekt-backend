@@ -39,8 +39,17 @@ describe("Integration test - POST /api/auth", () => {
   describe("Incorrect tests", () => {
     beforeEach(async () => {
       await UserModel.clear();
+      await UserModel.register(user);
     });
 
-    it("Invalid login of existing user (wrong password)", async () => {});
+    it("Invalid input data (missing password field)", async () => {
+      const res = await request(app)
+        .post("/api/auth")
+        .set("Content-type", `application/json`)
+        .send({ password: user.password });
+
+      res.should.have.status(404);
+      res.body.should.include({ message: "Username or password is incorrect" });
+    });
   });
 });
