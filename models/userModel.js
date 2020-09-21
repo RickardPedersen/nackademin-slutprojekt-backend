@@ -70,6 +70,10 @@ class User {
     };
   }
 
+  async addOrderHistory(userId, orderId) {
+    return await this.userModel.findByIdAndUpdate(userId, { $push: { orderHistory: orderId } }, { useFindAndModify: false, new: true })
+  }
+
   async clear() {
     await this.userModel.deleteMany({});
   }
