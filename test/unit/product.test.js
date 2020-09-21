@@ -111,7 +111,7 @@ describe('Unittest against productModel', function () {
             /**
              * Act
              */
-            const result = await product.deleteProduct(productToBeUpdated._id, updateData)
+            const result = await product.deleteProduct(productToBeUpdated._id,)
             /**
              * Assert
              */
