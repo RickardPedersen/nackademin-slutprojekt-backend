@@ -19,7 +19,7 @@ class User {
         enum: ["customer", "admin"],
       },
       password: { type: String, required: true },
-      address: {
+      adress: {
         street: { type: String, required: true },
         zip: { type: String, required: true },
         city: { type: String, required: true },
@@ -89,7 +89,7 @@ class User {
   }
 
   async getUser(userId) {
-    return await this.userModel.findById(userId)
+    return await this.userModel.findById(userId);
   }
 
   async clear() {
