@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
+const { NotFoundError, UnauthorizedError } = require("../utilities/error");
 
 class User {
   userSchema = new mongoose.Schema(
@@ -34,6 +35,19 @@ class User {
       email,
       role,
       name,
+    };
+  }
+
+  async login(username, password) {
+    const user = await this.userModel.findOne({ email: username });
+    if (!user) throw new NotFoundError("Username or password is incorrect");
+
+    const validPassword = bcrypt.compare(password, user.password);
+    if (!validPassword)
+      throw new UnauthorizedError("Username or password is incorrect");
+
+    return {
+      user,
     };
   }
 
