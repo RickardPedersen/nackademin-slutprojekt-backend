@@ -56,14 +56,14 @@ describe('Unittest against productModel', function () {
              */
             let resultsPromises = []
             allProducts.forEach(productObject => {
-                 resultsPromises.push(product.getSpecifcProduct(productObject._id))
+                 resultsPromises.push(product.getSpecificProduct(productObject._id))
             })
 
             let allSpecificProducts = await Promise.all(resultsPromises)
             /**
              * Assert
              */
-            expect(allSpecificProducts.length).to.have.length(allProducts.length)
+            expect(allSpecificProducts).to.have.length(allProducts.length)
             for (let index = 0; index < allProducts.length; index++) {
                 expect(allSpecificProducts[index]).to.include(allProducts[index])
             }
@@ -111,12 +111,12 @@ describe('Unittest against productModel', function () {
             /**
              * Act
              */
-            let result = await Promise.allSettled([product.getSpecifcProduct(fake_id)])
+            let result = await Promise.allSettled([product.getSpecificProduct(fake_id)])
             /**
              * Assert
              */
 
-            expect(result.status).to.equals('rejected')
+            expect(result[0].status).to.equals('rejected')
         })
     })
 })
