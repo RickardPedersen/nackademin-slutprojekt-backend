@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-const {BadRequestError} = require('../utilities/error')
+const {BadRequestError, NotFoundError} = require('../utilities/error')
 
 class Product {
     productSchema = new mongoose.Schema({
@@ -16,7 +16,7 @@ class Product {
             let result = await this.productModel.create(newObject)
 
             return {
-                _id: result._id,
+                _id: result._id.toString(),
                 title: result.title,
                 price: result.price,
                 shortDesc: result.shortDesc,
@@ -25,6 +25,39 @@ class Product {
             }
         } catch (error) {
             throw new BadRequestError(error.message)
+        }
+    }
+
+    async getSpecificProduct(_id) {
+        try {
+            let result = await this.productModel.findById({_id})
+            return {
+                _id: result._id.toString(),
+                title: result.title,
+                price: result.price,
+                shortDesc: result.shortDesc,
+                longDesc: result.longDesc,
+                imgFile: result.imgFile
+            }
+        } catch(error) {
+            throw new BadRequestError(error.message)
+        }
+    }
+
+    async getAllProducts() {
+        try {
+            let result = await this.productModel.find({})
+            return result.map(doc => {
+                return {
+                    _id: doc._id.toString(),
+                    title: doc.title,
+                    price: doc.price,
+                    shortDesc: doc.shortDesc,
+                    longDesc: doc.longDesc,
+                    imgFile: doc.imgFile}
+            })
+        } catch (error) {
+            throw new NotFoundError(error.message)
         }
     }
 }
