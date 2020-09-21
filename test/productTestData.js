@@ -16,7 +16,6 @@ function generateFakeObject() {
         title: faker.commerce.productName(),
         price: Math.ceil(faker.commerce.price()),
         shortDesc: faker.name.gender(),
-        category: faker.commerce.product(),
         longDesc: faker.commerce.productDescription(),
         imgFile: images[Math.floor(Math.random() * images.length)]
     }
@@ -32,28 +31,18 @@ let shouldFail = {
     missingTitle: {
         price: Math.ceil(faker.commerce.price()),
         shortDesc: faker.name.gender(),
-        category: faker.commerce.product(),
         longDesc: faker.commerce.productDescription(),
         imgFile: images[Math.floor(Math.random() * images.length)]
     },
     missingPrice: {
         title: faker.commerce.productName(),
         shortDesc: faker.name.gender(),
-        category: faker.commerce.product(),
         longDesc: faker.commerce.productDescription(),
         imgFile: images[Math.floor(Math.random() * images.length)]
     },
     missingShortDesc: {
         title: faker.commerce.productName(),
         price: Math.ceil(faker.commerce.price()),
-        category: faker.commerce.product(),
-        longDesc: faker.commerce.productDescription(),
-        imgFile: images[Math.floor(Math.random() * images.length)]
-    },
-    missingCategory: {
-        title: faker.commerce.productName(),
-        price: Math.ceil(faker.commerce.price()),
-        shortDesc: faker.name.gender(),
         longDesc: faker.commerce.productDescription(),
         imgFile: images[Math.floor(Math.random() * images.length)]
     },
@@ -61,14 +50,12 @@ let shouldFail = {
         title: faker.commerce.productName(),
         price: Math.ceil(faker.commerce.price()),
         shortDesc: faker.name.gender(),
-        category: faker.commerce.product(),
         imgFile: images[Math.floor(Math.random() * images.length)]
     },
     missingImgFile: {
         title: faker.commerce.productName(),
         price: Math.ceil(faker.commerce.price()),
         shortDesc: faker.name.gender(),
-        category: faker.commerce.product(),
         longDesc: faker.commerce.productDescription(),
     }
 }

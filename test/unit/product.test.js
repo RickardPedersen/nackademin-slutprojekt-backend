@@ -37,7 +37,6 @@ describe('Unittest against productModel', function () {
             /**
              * Assert
              */
-
             for (let index = 0; index < results.length; index++) {
                 expect(results[index]).to.includes(shouldSucceed.multipleObjects[index])
             }

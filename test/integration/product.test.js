@@ -87,7 +87,7 @@ describe('Integration against productModel', function () {
              * Assert
              */
             for (let index = 0; index < results.length; index++) {
-                expect(results[index]).to.have.status(401)
+                expect(results[index]).to.have.status(400)
             }
         })
     })
