@@ -47,5 +47,15 @@ describe("Unit test - User model", () => {
         .should.eventually.be.rejectedWith("Username or password is incorrect")
         .notify(done);
     });
+
+    it("Invalid login of existing user (wrong password)", (done) => {
+      UserModel.register(user).then(() => {
+        UserModel.login("test@test.com", user.password)
+          .should.eventually.be.rejectedWith(
+            "Username or password is incorrect"
+          )
+          .notify(done);
+      });
+    });
   });
 });
