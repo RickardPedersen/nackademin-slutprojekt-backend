@@ -22,12 +22,55 @@ function generateFakeObject() {
     }
 }
 
-
-
-shouldSucceed = {
+let shouldSucceed = {
     singleObject: generateFakeObject(),
     multipleObjects: [
     ]
+}
+
+let shouldFail = {
+    missingTitle: {
+        price: Math.ceil(faker.commerce.price()),
+        shortDesc: faker.name.gender(),
+        category: faker.commerce.product(),
+        longDesc: faker.commerce.productDescription(),
+        imgFile: images[Math.floor(Math.random() * images.length)]
+    },
+    missingPrice: {
+        title: faker.commerce.productName(),
+        shortDesc: faker.name.gender(),
+        category: faker.commerce.product(),
+        longDesc: faker.commerce.productDescription(),
+        imgFile: images[Math.floor(Math.random() * images.length)]
+    },
+    missingShortDesc: {
+        title: faker.commerce.productName(),
+        price: Math.ceil(faker.commerce.price()),
+        category: faker.commerce.product(),
+        longDesc: faker.commerce.productDescription(),
+        imgFile: images[Math.floor(Math.random() * images.length)]
+    },
+    missingCategory: {
+        title: faker.commerce.productName(),
+        price: Math.ceil(faker.commerce.price()),
+        shortDesc: faker.name.gender(),
+        longDesc: faker.commerce.productDescription(),
+        imgFile: images[Math.floor(Math.random() * images.length)]
+    },
+    missingLongDesc: {
+        title: faker.commerce.productName(),
+        price: Math.ceil(faker.commerce.price()),
+        shortDesc: faker.name.gender(),
+        category: faker.commerce.product(),
+        imgFile: images[Math.floor(Math.random() * images.length)]
+    },
+    missingImgFile: {
+        title: faker.commerce.productName(),
+        price: Math.ceil(faker.commerce.price()),
+        shortDesc: faker.name.gender(),
+        category: faker.commerce.product(),
+        longDesc: faker.commerce.productDescription(),
+    }
 }
 
 for(let index = 0; index < 100; index++) {
@@ -36,4 +79,4 @@ for(let index = 0; index < 100; index++) {
 
 
 
-module.exports = {shouldSucceed}
+module.exports = {shouldSucceed, shouldFail}

@@ -6,7 +6,7 @@ chai.use(chaiHTTP);
 const app = require('../../app');
 const server = require('../../start');
 let {connect, disconnect} = require('../../database/db')
-let {shouldSucceed} = require('../productTestData');
+let {shouldFail, shouldSucceed} = require('../productTestData');
 const product = require('../../models/productModel')
 
 describe('Integration against productModel', function () {
@@ -69,6 +69,26 @@ describe('Integration against productModel', function () {
     })
 
     describe('Should fail', function () {
-
+        it('Should fail to create products', async function() {
+            /**
+             * Arrange
+             */
+            let promises = []
+            /**
+             * Act
+             */
+            for(let [key, object] of Object.entries(shouldFail)) {
+                promises.push(chai.request(app)
+                    .post('/api/products')
+                    .send(object))
+            }
+            let results = await Promise.all(promises)
+            /**
+             * Assert
+             */
+            for (let index = 0; index < results.length; index++) {
+                expect(results[index]).to.have.status(401)
+            }
+        })
     })
 })

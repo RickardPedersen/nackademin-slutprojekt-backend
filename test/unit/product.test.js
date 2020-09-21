@@ -2,7 +2,7 @@ require('dotenv').config()
 const chai = require('chai')
 const expect = chai.expect
 let {connect, disconnect} = require('../../database/db')
-let {shouldSucceed} = require('../productTestData');
+let {shouldFail, shouldSucceed} = require('../productTestData');
 const product = require('../../models/productModel')
 
 describe('Unittest against productModel', function () {
@@ -61,6 +61,24 @@ describe('Unittest against productModel', function () {
     })
 
     describe('Should fail', function () {
-
+        it('Should fail to create products', async function() {
+            /**
+             * Arrange
+             */
+            let promises = []
+            /**
+             * Act
+             */
+            for(let [key, object] of Object.entries(shouldFail)) {
+                promises.push(product.createProduct(object))
+            }
+            let results = await Promise.allSettled(promises)
+            /**
+             * Assert
+             */
+            for (let index = 0; index < results.length; index++) {
+                expect(results[index].status).to.equals('rejected')
+            }
+        })
     })
 })
