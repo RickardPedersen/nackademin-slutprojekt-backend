@@ -60,6 +60,14 @@ class Product {
             throw new NotFoundError(error.message)
         }
     }
+
+    updateProduct(_id, objectToUpdateWith) {
+        try {
+            return this.productModel.findOneAndUpdate({_id}, {$set: objectToUpdateWith}, {new: true, useFindAndModify: false})
+        } catch(error) {
+            throw new BadRequestError(error.message)
+        }
+    }
 }
 
 module.exports = new Product()
