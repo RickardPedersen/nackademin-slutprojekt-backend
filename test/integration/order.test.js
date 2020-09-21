@@ -84,6 +84,30 @@ describe('Integration tests for order endpoint', function() {
             res.body.items.should.deep.include(newProduct._id)
             res.body.orderValue.should.equal(newProduct.price * 2)
         })
+
+        it('Should get all orders (admin)', async function() {
+            // Arrange
+            const newProduct = await Product.createProduct(shouldSucceed.singleObject)
+            const newOrder = {
+                items: [newProduct._id, newProduct._id],
+                orderValue: 100
+            }
+
+            for (let i = 0; i < 15; i++) {
+                await Order.createOrder(newOrder)
+            }
+
+            // Act
+            const res = await request(app)
+                .get('/api/orders')
+                .set('Authorization', `Bearer ${this.test.adminToken}`)
+                .set('Content-Type', 'application/json')
+
+            res.should.have.status(200)
+            res.should.be.json
+            res.body.should.be.an('array')
+            res.body.length.should.equal(15)
+        })
     })
 
     describe('Fail tests', function() {

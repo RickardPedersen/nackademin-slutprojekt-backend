@@ -13,7 +13,7 @@ switch(process.env.ENVIRONMENT) {
         if (process.env.DBUSER && process.env.DBPASSWORD) {
             auth = `${process.env.DBUSER}:${process.env.DBPASSWORD}@`
         }
-        let tls = (process.env.DBTLS.toLowerCase() == 'true')? '+srv' : ''
+        let tls = (process.env.DB_TLS.toLowerCase() == 'true')? '+srv' : ''
         mongodb = {
             getUri: async () =>
                 `mongodb${tls}://${auth}${process.env.DBHOST}:/${process.env.DATABASE}_${process.env.ENVIRONMENT}`
