@@ -87,9 +87,6 @@ describe('Unittest against productModel', function () {
              */
             expect(results).to.have.length(allProducts.length)
 
-            for(let index = 0; index < allProducts.length; index++) {
-                expect(results[index]).to.include(allProducts[index])
-            }
         })
 
         it('Should be able to update specific product', async function () {
