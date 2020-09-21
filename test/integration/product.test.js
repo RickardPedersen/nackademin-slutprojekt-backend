@@ -103,7 +103,7 @@ describe('Integration against productModel', function () {
             expect(results).to.have.status(200)
 
             for(let index = 0; index < allProducts.length; index++) {
-
+                expect(results[index]).to.include(allProducts[index])
             }
         })
 
