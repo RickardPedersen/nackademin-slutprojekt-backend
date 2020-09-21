@@ -1,7 +1,11 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const { NotFoundError, UnauthorizedError } = require("../utilities/error");
+const {
+  NotFoundError,
+  UnauthorizedError,
+  BadRequestError,
+} = require("../utilities/error");
 
 class User {
   userSchema = new mongoose.Schema(
@@ -28,9 +32,15 @@ class User {
   userModel = new mongoose.model("user", this.userSchema);
 
   async register(user) {
-    const password = bcrypt.hashSync(user.password, 10);
+    const newUser = { ...user };
+    if (newUser.repeatPassword !== newUser.password)
+      throw new BadRequestError("Password's don't match!");
+
+    delete newUser.repeatPassword;
+
+    const password = bcrypt.hashSync(newUser.password, 10);
     const { _id, email, role, name } = await this.userModel.create({
-      ...user,
+      ...newUser,
       password: password,
     });
 
@@ -71,7 +81,11 @@ class User {
   }
 
   async addOrderHistory(userId, orderId) {
-    return await this.userModel.findByIdAndUpdate(userId, { $push: { orderHistory: orderId } }, { useFindAndModify: false, new: true })
+    return await this.userModel.findByIdAndUpdate(
+      userId,
+      { $push: { orderHistory: orderId } },
+      { useFindAndModify: false, new: true }
+    );
   }
 
   async getUser(userId) {
