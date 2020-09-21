@@ -121,7 +121,21 @@ describe('Integration against productModel', function () {
         })
 
         it('Should be able to delete specific product', async function() {
-
+            /**
+             * Arrange
+             */
+            const productToBeDeleted = await product.createProduct(shouldSucceed.multipleObjects[0])
+            /**
+             * Act
+             */
+            const result =await chai.request(app)
+                .delete(`/api/products/${productToBeDeleted._id}`)
+                .send()
+            /**
+             * Assert
+             */
+            expect(result).to.have.status(200)
+            expect(result.body.totalRemoved).to.equal(1)
         });
     })
 
