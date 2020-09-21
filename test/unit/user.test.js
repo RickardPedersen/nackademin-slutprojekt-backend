@@ -24,6 +24,17 @@ describe("Unit test - User model", () => {
       newUser.should.be.a("object");
       newUser.should.have.keys("_id", "email", "role", "name");
     });
+
+    it("Login a existing user", async () => {
+      await UserModel.register(user);
+      const loggedInUser = await UserModel.login({
+        email: user.email,
+        password: user.password,
+      });
+
+      loggedInUser.should.be.a("object");
+      loggedInUser.should.have.keys("token", "user");
+    });
   });
 
   describe("Incorrect tests", () => {
