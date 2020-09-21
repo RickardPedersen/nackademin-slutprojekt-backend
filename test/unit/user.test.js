@@ -1,4 +1,4 @@
-require('dotenv').config()
+require("dotenv").config();
 const db = require("../../database/db");
 const UserModel = require("../../models/userModel");
 const chai = require("chai");
@@ -23,7 +23,14 @@ describe("Unit test - User model", () => {
     it("Register a new user", async () => {
       const newUser = await UserModel.register(user);
       newUser.should.be.a("object");
-      newUser.should.have.keys("_id", "email", "role", "name");
+      newUser.should.have.keys(
+        "_id",
+        "email",
+        "role",
+        "name",
+        "adress",
+        "orderHistory"
+      );
     });
 
     it("Login a existing user", async () => {
