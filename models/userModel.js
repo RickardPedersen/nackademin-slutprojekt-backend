@@ -39,17 +39,14 @@ class User {
     delete newUser.repeatPassword;
 
     const password = bcrypt.hashSync(newUser.password, 10);
-    const { _id, email, role, name } = await this.userModel.create({
+    const registeredUser = await this.userModel.create({
       ...newUser,
       password: password,
     });
 
-    return {
-      _id,
-      email,
-      role,
-      name,
-    };
+    delete registeredUser._doc.password;
+
+    return registeredUser._doc;
   }
 
   generateToken(user) {

@@ -1,4 +1,4 @@
-require('dotenv').config()
+require("dotenv").config();
 const chai = require("chai");
 const chaiHttp = require("chai-http");
 const app = require("../../app");
@@ -29,7 +29,7 @@ describe("Integration test - POST /api/auth", () => {
       const res = await request(app)
         .post("/api/auth")
         .set("Content-type", `application/json`)
-        .send({ username: user.email, password: user.password });
+        .send({ email: user.email, password: user.password });
 
       res.should.have.status(200);
       res.should.be.json;
@@ -57,7 +57,7 @@ describe("Integration test - POST /api/auth", () => {
       const res = await request(app)
         .post("/api/auth")
         .set("Content-type", `application/json`)
-        .send({ username: user.email });
+        .send({ email: user.email });
 
       res.should.have.status(500);
       res.body.should.include({

@@ -2,9 +2,9 @@ const UserModel = require("../models/userModel");
 
 class AuthController {
   async loginUser(req, res, next) {
-    const { username, password } = req.body;
+    const { email, password } = req.body;
     try {
-      const user = await UserModel.login(username, password);
+      const user = await UserModel.login(email, password);
       return res.status(200).send(user);
     } catch (e) {
       next(e);

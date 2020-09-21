@@ -1,4 +1,4 @@
-require('dotenv').config()
+require("dotenv").config();
 const chai = require("chai");
 const chaiHttp = require("chai-http");
 const app = require("../../app");
@@ -31,7 +31,14 @@ describe("Integration test - POST /api/register", () => {
 
       expect(res).to.have.status(200);
       expect(res).to.be.json;
-      expect(res.body).to.have.keys("_id", "email", "name", "role");
+      expect(res.body).to.have.keys(
+        "_id",
+        "email",
+        "role",
+        "name",
+        "adress",
+        "orderHistory"
+      );
     });
   });
 
