@@ -7,7 +7,9 @@ const app = require('../../app');
 const server = require('../../start');
 let {connect, disconnect} = require('../../database/db')
 let {shouldFail, shouldSucceed, updateData} = require('../productTestData');
+const { user, invalidUser } = require("../userTestData");
 const product = require('../../models/productModel')
+const userModel = require('../../models/userModel')
 
 describe('Integration against productModel', function () {
     before( async() => {
@@ -15,15 +17,20 @@ describe('Integration against productModel', function () {
     })
 
     after(async () => {
+        await userModel.userModel.deleteMany({})
         await product.productModel.deleteMany({})
         await disconnect()
         await server.close()
     });
 
     describe('Successful tests', function () {
-
+        let token
         beforeEach(async function() {
             await product.productModel.deleteMany({})
+            await userModel.userModel.deleteMany({})
+            await userModel.register(JSON.parse(JSON.stringify(user)))
+            const res = await userModel.login(user.email, user.password)
+            token = res.token
         });
 
         it('Should be able to create many products', async function() {
@@ -37,6 +44,7 @@ describe('Integration against productModel', function () {
             shouldSucceed.multipleObjects.forEach(object => {
                 promises.push(chai.request(app)
                     .post('/api/products')
+                    .set('Authorization', `Bearer ${token}`)
                     .send(object))
             })
 
