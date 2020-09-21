@@ -1,11 +1,5 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
-const {
-  NotFoundError,
-  UnauthorizedError,
-  BadRequestError,
-} = require("../utilities/error");
 
 class User {
   userSchema = new mongoose.Schema(
@@ -32,7 +26,6 @@ class User {
   userModel = new mongoose.model("user", this.userSchema);
 
   async register(user) {
-    // Need some add some error handling.
     user.password = bcrypt.hashSync(user.password, 10);
     const newUser = new this.userModel(user);
     const { _id, email, role, name } = await newUser.save();

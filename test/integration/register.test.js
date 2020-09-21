@@ -2,7 +2,7 @@ const chai = require("chai");
 const chaiHttp = require("chai-http");
 const app = require("../../app");
 const db = require("../../database/db");
-const { user } = require("../userTestData");
+const { user, invalidUser } = require("../userTestData");
 const UserModel = require("../../models/userModel");
 
 chai.use(chaiHttp);
@@ -31,6 +31,21 @@ describe("Integration test - POST /api/register", () => {
       expect(res).to.have.status(200);
       expect(res).to.be.json;
       expect(res.body).to.have.keys("_id", "email", "name", "role");
+    });
+  });
+
+  describe("Incorrect tests", () => {
+    beforeEach(async () => {
+      await UserModel.clear();
+    });
+
+    it("Invalid registration a new user (no email & name)", async () => {
+      const res = await request(app)
+        .post("/api/register")
+        .set("Content-type", `application/json`)
+        .send(invalidUser);
+
+      res.should.have.status(500);
     });
   });
 });

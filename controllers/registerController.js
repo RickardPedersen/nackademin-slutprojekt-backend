@@ -6,7 +6,6 @@ class RegisterController {
       const user = await UserModel.register(req.body);
       return res.status(200).send(user);
     } catch (e) {
-      console.log(e);
       next(e);
     }
   }
