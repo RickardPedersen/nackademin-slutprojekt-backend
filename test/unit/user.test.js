@@ -31,7 +31,7 @@ describe("Unit test - User model", () => {
       await UserModel.clear();
     });
 
-    it("Invalid registration a new user (no email & name)", async () => {
+    it("Invalid registration a new user (missing input data)", async () => {
       await UserModel.register(invalidUser).should.be.rejectedWith(Error);
     });
   });
