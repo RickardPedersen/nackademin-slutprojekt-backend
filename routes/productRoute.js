@@ -1,6 +1,6 @@
 const productController = require('../controllers/productController')
 const router = require('express').Router()
-const {admin} = require('../middlewares/handleAuth')
+const { admin } = require('../middlewares/handleAuth')
 
 router.post('/', admin, productController.createProduct.bind(productController))
 router.get('/', productController.getAllProducts.bind(productController))
